@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-12 col-xl-10 mx-auto animated fadeIn delay-2s">
     <div class="card-header bg-primary text-white">
-      <?=ucwords("Create Form")?>
+      <?=ucwords($title_module)?>
     </div>
     <div class="card">
       <div class="card-body">
         <table class="table table-bordered table-striped">
         <tr>
-          <td>Event Name</td>
+          <td>Name</td>
           <td><?=$name?></td>
         </tr>
       <tr>
@@ -27,7 +27,15 @@
           <td><?=$description?></td>
         </tr>
         <tr>
-          <td>Admin id</td>
+          <td>Foto sampul</td>
+          <td><?=is_image($foto_sampul)?></td>
+        </tr>
+        <tr>
+          <td>Categories</td>
+          <td><?=$categories_id?></td>
+        </tr>
+        <tr>
+          <td>Admin</td>
           <td><?=$admin_id?></td>
         </tr>
         </table>

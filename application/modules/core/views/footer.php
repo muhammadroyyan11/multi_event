@@ -332,16 +332,14 @@
 
 
     $('.file-upload-browse').on('click', function() {
-      var data_id = $(this).data('id');
-      var file = $(".file-upload-default[data-id='" + data_id + "']");
-      file.focus().trigger('click');
-    });
+            var data_id = $(this).data('id');
+            var file = $(".file-upload-default[data-id='" + data_id + "']");
+            file.focus().trigger('click');
+        });
 
     $('.file-upload-default').on('change', function() {
       var data_id = $(this).data('id');
-      $(".file-upload-browse[data-id='" + data_id + "']").html(`<div class="spinner-border-custom spinner-border text-light" role="status"">
-                                     <span class="sr-only">Loading...</span>
-                                   </div>`);
+      $(".file-upload-browse[data-id='" + data_id + "']").html(`<div class="spinner-border-custom spinner-border text-light" role="status""><span class="sr-only">Loading...</span></div>`);
       var file_data = $(".file-upload-default[data-id='" + data_id + "']").prop("files")[0];
       var form_data = new FormData();
       form_data.append("file", file_data);

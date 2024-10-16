@@ -77,17 +77,31 @@ function formatDate($date)
             <div class="col-lg-8 m-auto">
                 <form action="/form/submit_form/<?php echo $form['id']; ?>" method="POST" class="comment-form">
                     <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <label for="">Pilih Kategori</label>
+                            <select name="price" id="price" class="form-control">
+                                <option value="">-- Pilih Kategori --</option>
+                                <?php
+                                foreach ($price as $key => $data) { ?>
+                                    <option value="<?= $data->price?>"><?= $data->sub_categories?> - <?= $data->price?></option>
+                                <?php }
+                                ?>
+                            </select>
+
+                        </div>
                         <?php foreach ($fields as $field): ?>
                             <div class="<?php echo $field['field_type'] == 'textarea' ? 'col-lg-12' : 'col-lg-6'; ?>">
                                 <div class="form-group">
+                                    <label for="field-<?php echo $field['id']; ?>"><?php echo $field['field_label']; ?></label> <!-- Added Label -->
+
                                     <?php if ($field['field_type'] == 'text'): ?>
-                                        <input type="text" name="fields[<?php echo $field['id']; ?>]" class="form-control" placeholder="<?php echo $field['field_label']; ?>" required>
+                                        <input type="text" id="field-<?php echo $field['id']; ?>" name="fields[<?php echo $field['id']; ?>]" class="form-control" placeholder="<?php echo $field['field_label']; ?>" required>
 
                                     <?php elseif ($field['field_type'] == 'textarea'): ?>
-                                        <textarea name="fields[<?php echo $field['id']; ?>]" class="form-control" placeholder="<?php echo $field['field_label']; ?>" required></textarea>
+                                        <textarea id="field-<?php echo $field['id']; ?>" name="fields[<?php echo $field['id']; ?>]" class="form-control" placeholder="<?php echo $field['field_label']; ?>" required></textarea>
 
                                     <?php elseif ($field['field_type'] == 'select'): ?>
-                                        <select name="fields[<?php echo $field['id']; ?>]" class="form-control" required>
+                                        <select id="field-<?php echo $field['id']; ?>" name="fields[<?php echo $field['id']; ?>]" class="form-control" required>
                                             <?php
                                             $options = explode(',', $field['field_options']);
                                             foreach ($options as $option): ?>
@@ -122,6 +136,8 @@ function formatDate($date)
         </div>
     </div>
 </div>
+<!-- Comment Form Section End -->
+
 <!-- Comment Form Section End -->
 
 <!-- Comment Form Section End -->

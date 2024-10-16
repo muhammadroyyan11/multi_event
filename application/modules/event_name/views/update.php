@@ -2,50 +2,89 @@
   <div class="col-md-12 col-xl-10 mx-auto animated fadeIn delay-2s">
     <div class="card m-b-30">
       <div class="card-header bg-primary text-white">
-        <?=ucwords($title_module)?>
+        <?= ucwords($title_module) ?>
       </div>
       <div class="card-body">
-          <form action="<?=$action?>" id="form" autocomplete="off">
-          
+        <form action="<?= $action ?>" id="form" autocomplete="off">
+
           <div class="form-group">
-            <label>Event Name</label>
-            <input type="text" class="form-control form-control-sm" placeholder="Event Name" name="name" id="name" value="<?=$name?>">
+            <label>Name</label>
+            <input type="text" class="form-control form-control-sm" placeholder="Name" name="name" id="name" value="<?= $name ?>">
           </div>
-        
+
           <div class="form-group">
             <label>Date start</label>
-            <input type="date" class="form-control form-control-sm" placeholder="Date start" name="date_start" id="date_start" value="<?=$date_start?>">
+            <input type="date" class="form-control form-control-sm" placeholder="Date start" name="date_start" id="date_start" value="<?= $date_start ?>">
           </div>
-        
+
           <div class="form-group">
             <label>Date end</label>
-            <input type="date" class="form-control form-control-sm" placeholder="Date end" name="date_end" id="date_end" value="<?=$date_end?>">
+            <input type="date" class="form-control form-control-sm" placeholder="Date end" name="date_end" id="date_end" value="<?= $date_end ?>">
           </div>
-        
+
           <div class="form-group">
             <label>Place</label>
-            <input type="text" class="form-control form-control-sm" placeholder="Place" name="place" id="place" value="<?=$place?>">
+            <input type="text" class="form-control form-control-sm" placeholder="Place" name="place" id="place" value="<?= $place ?>">
           </div>
-        
+
           <div class="form-group">
             <label>Description</label>
-            <textarea class="form-control text-editor" rows="3" data-original-label="description" name="description" id="description"><?=$description?></textarea>
+            <textarea class="form-control text-editor" rows="3" data-original-label="description" name="description" id="description"><?= $description ?></textarea>
           </div>
-        
+
+          <!-- <div class="form-group">
+            <label>Foto sampul</label>
+            <input type="file" name="img" class="file-upload-default" data-id="foto_sampul" style="display: none;" />
+            <div class="input-group col-xs-12">
+              <input type="hidden" class="file-dir" name="file-dir-foto_sampul" data-id="foto_sampul" />
+              <input type="text" class="form-control form-control-sm file-upload-info file-name" data-id="foto_sampul" placeholder="Foto sampul" readonly name="foto_sampul" value="<?= $foto_sampul ?>" />
+              <span class="input-group-append">
+                <button class="btn-remove-image btn btn-danger btn-sm" type="button" data-id="foto_sampul" style="display:<?= $foto_sampul != '' ? 'block' : 'none' ?>;"><i class="ti-trash"></i></button>
+                <button class="file-upload-browse btn btn-primary btn-sm" data-id="foto_sampul" type="button">Select File</button>
+              </span>
+            </div>
+            <div id="foto_sampul"></div>
+          </div> -->
+
           <div class="form-group">
-            <label>Admin id</label>
-            <!--
-              app_helper.php - methode is_radio
-              is_radio("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
-            --->
-            <?=is_radio("auth_user","admin_id","id_user","name","$admin_id");?>
+            <label>Image</label>
+            <input type="file" name="img" class="file-upload-default" data-id="foto_sampul" style="display: none;" />
+            <div class="input-group col-xs-12">
+              <input type="text" class="file-dir" name="file-dir-foto_sampul" data-id="foto_sampul" />
+              <input type="text" class="form-control file-upload-info file-name" data-id="foto_sampul" placeholder="foto_sampul" readonly name="foto_sampul" />
+              <span class="input-group-append">
+                <button class="btn-remove-foto_sampul btn btn-danger btn-sm" type="button" data-id="foto_sampul" style="display:<?= $foto_sampul != '' ? 'block' : 'none' ?>;">
+                  <i class="ti-trash"></i></button>
+                <button class="file-upload-browse btn btn-primary btn-sm" data-id="foto_sampul"
+                  type="button">Select File</button>
+              </span>
+            </div>
+            <div id="foto_sampul"></div>
           </div>
-        
+
+          <div class="form-group">
+            <label>Categories</label>
+            <!--
+              app_helper.php - methode is_select
+              is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
+            --->
+            <?= is_select("categories", "categories_id", "id", "name", "$categories_id"); ?>
+          </div>
+
+          <div class="form-group">
+            <label>Admin</label>
+            <!--
+              app_helper.php - methode is_select
+              is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
+            --->
+            <?= is_select("auth_user", "admin_id", "id_user", "name", "$admin_id"); ?>
+          </div>
+
           <input type="hidden" name="submit" value="update">
 
           <div class="text-right">
-            <a href="<?=url($this->uri->segment(2))?>" class="btn btn-sm btn-danger"><?=cclang("cancel")?></a>
-            <button type="submit" id="submit"  class="btn btn-sm btn-primary"><?=cclang("update")?></button>
+            <a href="<?= url($this->uri->segment(2)) ?>" class="btn btn-sm btn-danger"><?= cclang("cancel") ?></a>
+            <button type="submit" id="submit" class="btn btn-sm btn-primary"><?= cclang("update") ?></button>
           </div>
         </form>
       </div>
@@ -55,35 +94,79 @@
 
 
 <script type="text/javascript">
-$("#form").submit(function(e){
-e.preventDefault();
-var me = $(this);
-$("#submit").prop('disabled',true).html('Loading...');
-$(".form-group").find('.text-danger').remove();
-$.ajax({
-      url             : me.attr('action'),
-      type            : 'post',
-      data            :  new FormData(this),
-      contentType     : false,
-      cache           : false,
-      dataType        : 'JSON',
-      processData     :false,
-      success:function(json){
-        if (json.success==true) {
+  $('.file-upload-browse').on('click', function() {
+    var data_id = $(this).data('id');
+    var file = $(".file-upload-default[data-id='" + data_id + "']");
+    file.focus().trigger('click');
+  });
+
+  $('.file-upload-default').on('change', function() {
+            var data_id = $(this).data('id');
+            $(".file-upload-browse[data-id='" + data_id + "']").html(`<div class="spinner-border-custom spinner-border text-light" role="status"">
+                                     <span class="sr-only">Loading...</span>
+                                   </div>`);
+            var file_data = $(".file-upload-default[data-id='" + data_id + "']").prop("files")[0];
+            var form_data = new FormData();
+            form_data.append("file", file_data);
+            $.ajax({
+                url: '<?= url("core/imageUpload") ?>',
+                type: 'post',
+                data: form_data,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(json) {
+                    $(".file-upload-browse[data-id='" + data_id + "']").html("Select File");
+                    if (json.success != true) {
+                        $(".file-dir[data-id='" + data_id + "']").val("");
+                        $(".file-name[data-id='" + data_id + "']").val("");
+                        $(".btn-remove-image[data-id='" + data_id + "']").hide();
+                        showToast("error", json.msg);
+                    } else {
+                        if (json.select != false) {
+                            $(".file-dir[data-id='" + data_id + "']").val(json.file_dir);
+                            $(".file-name[data-id='" + data_id + "']").val(json.file_name);
+                            if ($(".file-name[data-id='" + data_id + "']").val() != "") {
+                                $(".btn-remove-image[data-id='" + data_id + "']").show();
+                            }
+                        }
+                        //  console.log(json.msg);
+                    }
+                }
+            });
+        });
+
+
+  $("#form").submit(function(e) {
+    e.preventDefault();
+    var me = $(this);
+    $("#submit").prop('disabled', true).html('Loading...');
+    $(".form-group").find('.text-danger').remove();
+    $.ajax({
+      url: me.attr('action'),
+      type: 'post',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      dataType: 'JSON',
+      processData: false,
+      success: function(json) {
+        if (json.success == true) {
           location.href = json.redirect;
           return;
-        }else {
-          $("#submit").prop('disabled',false)
-                      .html('<?=cclang("save")?>');
+        } else {
+          $("#submit").prop('disabled', false)
+            .html('<?= cclang("save") ?>');
           $.each(json.alert, function(key, value) {
             var element = $('#' + key);
             $(element)
-            .closest('.form-group')
-            .find('.text-danger').remove();
+              .closest('.form-group')
+              .find('.text-danger').remove();
             $(element).after(value);
           });
         }
       }
     });
-});
+  });
 </script>

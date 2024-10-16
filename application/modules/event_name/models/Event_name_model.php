@@ -8,7 +8,7 @@
 /*| instagram :  */
 /*| youtube :  */
 /*| --------------------------------------------------------------------------*/
-/*| Generate By M-CRUD Generator 13/10/2024 20:47*/
+/*| Generate By M-CRUD Generator 16/10/2024 10:34*/
 /*| Please DO NOT modify this information*/
 
 
@@ -17,9 +17,9 @@ class Event_name_model extends MY_Model
 
   private $table        = "event_name";
   private $primary_key  = "id";
-  private $column_order = array('name', 'date_start', 'date_end', 'place', 'description', 'admin_id');
+  private $column_order = array('name', 'date_start', 'date_end', 'place', 'description', 'foto_sampul', 'categories_id', 'admin_id');
   private $order        = array('event_name.id' => "DESC");
-  private $select       = "event_name.id,event_name.name,event_name.date_start,event_name.date_end,event_name.place,event_name.description,event_name.admin_id";
+  private $select       = "event_name.id,event_name.name,event_name.date_start,event_name.date_end,event_name.place,event_name.description,event_name.foto_sampul,event_name.categories_id,event_name.admin_id";
 
   public function __construct()
   {
@@ -58,6 +58,14 @@ class Event_name_model extends MY_Model
 
     if ($this->input->post("description")) {
       $this->db->like("event_name.description", $this->input->post("description"));
+    }
+
+    if ($this->input->post("foto_sampul")) {
+      $this->db->like("event_name.foto_sampul", $this->input->post("foto_sampul"));
+    }
+
+    if ($this->input->post("categories_id")) {
+      $this->db->like("event_name.categories_id", $this->input->post("categories_id"));
     }
 
     if ($this->input->post("admin_id")) {
@@ -138,6 +146,8 @@ class Event_name_model extends MY_Model
 
   public function _get_join()
   {
+    $this->db->select("categories.name");
+    $this->db->join("categories", "categories.id = event_name.categories_id", "left");
     $this->db->select("auth_user.name");
     $this->db->join("auth_user", "auth_user.id_user = event_name.admin_id", "left");
   }

@@ -19,6 +19,8 @@ class Event extends CI_Controller
 
         $form_id = $this->base->get('forms', ['event_id' => $id])->row()->id;
 
+        $categories_price = $this->base->get_price(['event_name.id' => $id])->result();
+
         $form = $this->base->get_form($form_id);
         $fields = $this->base->get_form_fields($form_id);
 
@@ -26,7 +28,8 @@ class Event extends CI_Controller
             'title' => 'Home Page',
             'row' => $get_event,
             'form' => $form,
-            'fields' => $fields
+            'fields' => $fields,
+            'price' => $categories_price    
         ];
 
         $this->frontend->load('frontend/template', 'frontend/event/event_detail', $data);

@@ -6,7 +6,7 @@
         <div class="card-header">
           <h4 class="card-title"><?=ucwords($title_module)?></h4>
           <div class="pull-right">
-                          <a href="<?=url("event_name/add")?>" class="btn btn-success btn-flat"><i class="fa fa-file btn-icon-prepend"></i> Add</a>
+                          <a href="<?=url("price_categories/add")?>" class="btn btn-success btn-flat"><i class="fa fa-file btn-icon-prepend"></i> Add</a>
                                       <button type="button" id="filter-show" class="btn btn-primary btn-flat"><i class="mdi mdi-backup-restore btn-icon-prepend"></i> Filter</button>
                       </div>
         </div>
@@ -15,43 +15,19 @@
             <form autocomplete="off" class="content-filter">
               <div class="row">
                                   <div class="form-group col-md-6">
-                                          <input type="text" id="name" class="form-control form-control-sm" placeholder="Name" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
-                                          <input type="date" id="date_start" class="form-control form-control-sm" placeholder="Date start" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
-                                          <input type="date" id="date_end" class="form-control form-control-sm" placeholder="Date end" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
-                                          <input type="text" id="place" class="form-control form-control-sm" placeholder="Place" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
-                                          <input type="text" id="description" class="form-control form-control-sm" placeholder="Description" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
-                                          <input type="text" id="foto_sampul" class="form-control form-control-sm" placeholder="Foto sampul" />
-                                      </div>
-
-                                  <div class="form-group col-md-6">
                                           <!--
                           app_helper.php - methode is_select
                           is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
                         --->
-                      <?=is_select_filter("categories","categories_id","id","name","Categories");?>
+                      <?=is_select_filter("categories","categories_id","id","name","Categories id");?>
                                       </div>
 
                                   <div class="form-group col-md-6">
-                                          <!--
-                          app_helper.php - methode is_select
-                          is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
-                        --->
-                      <?=is_select_filter("auth_user","admin_id","id_user","name","Admin");?>
+                                          <input type="text" id="sub_categories" class="form-control form-control-sm" placeholder="Sub categories" />
+                                      </div>
+
+                                  <div class="form-group col-md-6">
+                                          <input type="text" id="price" class="form-control form-control-sm" placeholder="Price" />
                                       </div>
 
                               </div>
@@ -64,14 +40,10 @@
               <table class="table display" name="table" id="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead>
                   <tr>
-							<th>Name</th>
-							<th>Date start</th>
-							<th>Date end</th>
-							<th>Place</th>
-							<th>Description</th>
-							<th>Foto sampul</th>
-							<th>Categories</th>
-							<th>Admin</th>
+							<th>Id</th>
+							<th>Categories id</th>
+							<th>Sub categories</th>
+							<th>Price</th>
                     <th>#</th>
                   </tr>
                 </thead>
@@ -106,17 +78,12 @@
 
       // Load data for the table's content from an Ajax source
       "ajax": {
-        "url": "<?= url("event_name/json")?>",
+        "url": "<?= url("price_categories/json")?>",
         "type": "POST",
          "data": function(data) {
-                                          data.name = $("#name").val();
-                                                        data.date_start = $("#date_start").val();
-                                                        data.date_end = $("#date_end").val();
-                                                        data.place = $("#place").val();
-                                                        data.description = $("#description").val();
-                                                        data.foto_sampul = $("#foto_sampul").val();
-                                                        data.categories_id = $("#categories_id").val();
-                                                        data.admin_id = $("#admin_id").val();
+                                          data.categories_id = $("#categories_id").val();
+                                                        data.sub_categories = $("#sub_categories").val();
+                                                        data.price = $("#price").val();
                                     }
               },
 
@@ -143,43 +110,18 @@
             "orderable": false
           },
 
-					{
-            "targets": 4,
-            "orderable": false
-          },
-
-					{
-            "targets": 5,
-            "orderable": false
-          },
-
-					{
-            "targets": 6,
-            "orderable": false
-          },
-
-					{
-            "targets": 7,
-            "orderable": false
-          },
-
         {
           "className": "text-center",
           "orderable": false,
-          "targets": 8
+          "targets": 4
         },
       ],
     });
 
     $("#reload").click(function() {
-                        $("#name").val("");
-                  $("#date_start").val("");
-                  $("#date_end").val("");
-                  $("#place").val("");
-                  $("#description").val("");
-                  $("#foto_sampul").val("");
-                  $("#categories_id").val("");
-                  $("#admin_id").val("");
+                        $("#categories_id").val("");
+                  $("#sub_categories").val("");
+                  $("#price").val("");
                     table.ajax.reload();
     });
 

@@ -8,8 +8,8 @@
           <form action="<?=$action?>" id="form" autocomplete="off">
 
           <div class="form-group">
-            <label>Event Name</label>
-            <input type="text" class="form-control form-control-sm" placeholder="Event Name" name="name" id="name">
+            <label>Name</label>
+            <input type="text" class="form-control form-control-sm" placeholder="Name" name="name" id="name">
           </div>
 
           <div class="form-group">
@@ -34,12 +34,35 @@
           </div>
 
           <div class="form-group">
-            <label>Admin id</label>
+            <label>Foto sampul</label>
+            <input type="file" name="img" class="file-upload-default" data-id="foto_sampul" style="display: none;"/>
+            <div class="input-group col-xs-12">
+              <input type="hidden" class="file-dir" name="file-dir-foto_sampul" data-id="foto_sampul"/>
+              <input type="text" class="form-control form-control-sm file-upload-info file-name" data-id="foto_sampul" placeholder="Foto sampul" readonly name="foto_sampul" />
+            <span class="input-group-append">
+              <button class="btn-remove-image btn btn-danger btn-sm" type="button" data-id="foto_sampul" style="display:<?=$foto_sampul!=''?'block':'none'?>;"><i class="ti-trash"></i></button>
+              <button class="file-upload-browse btn btn-primary btn-sm" data-id="foto_sampul" type="button">Select File</button>
+            </span>
+            </div>
+            <div id="foto_sampul"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Categories</label>
             <!--
-              app_helper.php - methode is_radio
-              is_radio("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
+              app_helper.php - methode is_select
+              is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
             --->
-            <?=is_radio("auth_user","admin_id","id_user","name");?>
+            <?=is_select("categories","categories_id","id","name");?>
+          </div>
+
+          <div class="form-group">
+            <label>Admin</label>
+            <!--
+              app_helper.php - methode is_select
+              is_select("table", "attribute`id & name`", "value", "label", "entry_value`optional`");
+            --->
+            <?=is_select("auth_user","admin_id","id_user","name");?>
           </div>
 
           <input type="hidden" name="submit" value="add">

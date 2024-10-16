@@ -40,6 +40,22 @@ class Base_model extends CI_Model
         return $sql;
     }
 
+    public function get_price($where = null)
+    {
+        $this->db->select('*');
+        $this->db->from('price_categories');
+        $this->db->join('categories', 'categories.id = price_categories.categories_id');
+        $this->db->join('event_name', 'event_name.categories_id = categories.id');
+
+        if ($where != null) {
+            $this->db->where($where);
+        }
+
+        $query = $this->db->get();
+
+        return $query;
+    }
+
     public function get_last_number()
     {
         $this->db->select('RFQNumber');
