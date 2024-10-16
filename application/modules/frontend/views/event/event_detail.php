@@ -28,7 +28,8 @@ function formatDate($date)
 ?>
 
 <!-- Blog Details Hero Section Begin -->
-<section class="blog-hero-section set-bg" data-setbg="<?= base_url() ?>assets/frontEnd/img/blog/blog-details/blog-details-hero.jpg">
+<!-- <section class="blog-hero-section set-bg" data-setbg="<?= base_url() ?>assets/frontEnd/img/blog/blog-details/blog-details-hero.jpg"> -->
+<section class="blog-hero-section set-bg" data-setbg="<?= is_image($row->foto_sampul)?>">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
